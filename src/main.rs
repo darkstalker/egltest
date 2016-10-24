@@ -27,8 +27,8 @@ fn main()
         let version = CStr::from_ptr(egl::QueryString(disp, egl::VERSION as EGLint));
         let apis = CStr::from_ptr(egl::QueryString(disp, egl::CLIENT_APIS as EGLint));
         let exts = CStr::from_ptr(egl::QueryString(disp, egl::EXTENSIONS as EGLint));
-        println!("EGL vendor: {:?}\nEGL version: {:?}\nEGL apis: {:?}\nEGL extensions: {:?}",
-            vendor, version, apis, exts);
+        println!("EGL vendor: {:?}\nEGL version: {:?}\nEGL apis: {:?}\nEGL extensions: {:#?}",
+            vendor, version, apis, exts.to_str().unwrap().split(' ').collect::<Vec<_>>());
     }
 
     let cfg_attribs = [
@@ -73,7 +73,7 @@ fn main()
         let renderer = CStr::from_ptr(gl::GetString(gl::RENDERER) as *const _);
         let version = CStr::from_ptr(gl::GetString(gl::VERSION) as *const _);
         let exts = CStr::from_ptr(gl::GetString(gl::EXTENSIONS) as *const _);
-        println!("GL vendor: {:?}\nGL renderer: {:?}\nGL version: {:?}\nGL extensions: {:?}",
-            vendor, renderer, version, exts);
+        println!("GL vendor: {:?}\nGL renderer: {:?}\nGL version: {:?}\nGL extensions: {:#?}",
+            vendor, renderer, version, exts.to_str().unwrap().split(' ').collect::<Vec<_>>());
     }
 }
